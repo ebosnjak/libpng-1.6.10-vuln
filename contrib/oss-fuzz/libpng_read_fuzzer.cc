@@ -156,10 +156,10 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   png_read_info(png_handler.png_ptr, png_handler.info_ptr);
 
   // reset error handler to put png_deleter into scope.
-  if (setjmp(png_jmpbuf(png_handler.png_ptr))) {
+  /*if (setjmp(png_jmpbuf(png_handler.png_ptr))) {
     PNG_CLEANUP
     return 0;
-  }
+  }*/
 
   png_uint_32 width, height;
   int bit_depth, color_type, interlace_type, compression_type;
@@ -168,12 +168,6 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   if (!png_get_IHDR(png_handler.png_ptr, png_handler.info_ptr, &width,
                     &height, &bit_depth, &color_type, &interlace_type,
                     &compression_type, &filter_type)) {
-    PNG_CLEANUP
-    return 0;
-  }
-
-  // This is going to be too slow.
-  if (width && height > 100000000 / width) {
     PNG_CLEANUP
     return 0;
   }

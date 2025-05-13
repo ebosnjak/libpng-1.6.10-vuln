@@ -147,10 +147,10 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   png_set_read_fn(png_handler.png_ptr, png_handler.buf_state, user_read_data);
   png_set_sig_bytes(png_handler.png_ptr, kPngHeaderSize);
 
-  if (setjmp(png_jmpbuf(png_handler.png_ptr))) {
+  /*if (setjmp(png_jmpbuf(png_handler.png_ptr))) {
     PNG_CLEANUP
     return 0;
-  }
+  }*/
 
   // Reading.
   png_read_info(png_handler.png_ptr, png_handler.info_ptr);
